@@ -1,0 +1,6 @@
+Orden de los comandos:
+1. Crear la llave publica con el formato Openssh: ssh-keygen -t rsa -b 4096
+2. Lo debemos guardar en el archivo: ~/.ssh/id_rsa
+3. Leemos el conrenido de la llave gnerada: cat ~/.ssh/id_rsa.pub
+4. Agregamos la llave SSH a nuestra configuración de GitHub.
+5. Clonamos el proyecto utilizando ssh

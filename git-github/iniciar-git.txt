@@ -1,0 +1,173 @@
+Git: es un repositorio local que tiene un sistema de control de versiones.
+GitHub: es un servicio que me permite usar git en la nube - repositorioRemoto
+
+Cuando trabajamos en local tenemos:
+1. Un directorio de trabajo (directorioDeTrabajo): es la ubicación en el PC local donde estan los archivos que hacen parte del repositorio - el directorioDeTrabajo es lo primero que se crea y el nombre de esta carpera será el nombre del repositorio (tanto local como remoto)
+2. Un Área de preparación / Staging (areaDePreparacion): este es un espacio en memoria RAM del pc que se reserva para rastear de los documentos del repositorio - me permite saber que archivos estan listos para subir al repositorio, saber si hay nuevos archivos en el directorioDeTrabajo o si hay cambio en los archivos del repositorio. (Si los archivos que esan en el areaDePreparacion no se suben al repositorio - después de un tiempo se libera la memoria (garbage Collector))
+3. Un Repositorio Local (repositorioLocal): Es git- el que se encarga de guardar los cambios en los archivos y llevar el historia de cambio del repositorio.
+
+1. Creamos el directorioDeTrabajo (ejm. crear carpeta "notes")
+2. Entramos al directorioDeTrabajo 
+3. Abrimos una terminal (git Bash)
+La terminal quedará asi: notes$ 
+4. Crea repositorio local
+git init : Crea el repositorio local "notes" y el areaDePreparacion - ambos vacios  
+(crea en el directorioDeTrabajo la carpeta oculta .git). 
+5. Configurar el nombre y correo de usuario de git en el equipo
+git config --global user.name "alorozcom" : se configura el nombreDelUsuario de git en el equipo
+git config --global user.email "alorozcom@unal.edu.co" : se configuran el correoDelUsuario de git en el equipo
+alorozcom será el usuario del repositorio "notes" -- mientras no se cambie
+6.Para subir un archivo al repositorio primero debe de pasar por el areaDePreparacion 
+a- Primero creamos el archivo en el directorioDeTrabajo (ej. nombreArchivo.txt)
+Al crear este archivo el areaDePreparacion reconoce que hay un archivo nuevo en el directorioDeTrabajo, pero este archivo esta en estado "untracker"
+Si ejecutamos 
+git status : este comando nos mostrará el estado de los archivos creados en el directorioDeTrabajo
+b- Adicionamos el archivo nombreArchivo.txt al areaDePreparacion
+git add nombreArchivo.txt : Adicionar el archivo (nombreArchivo.txt) al areaDePreparacion
+Nota: Para adicionar todos los archivos del directorioDeTrabajo ejecutamos --> git add . 
+Nota: git add . solo adiciona archivos, no sube carpetas - si una carpeta no tiene archivos no crea el directorio. 
+Si ejecutamos
+git status : podrémos ver el estado del archivo nombreArchivo.txt "tracker"
+Nota: Al tener todos los cambios listos en el areaDePreparacion ahora si podemos subir los archivos al repositorio. 
+7. Para enviar los archivos adicionados del areaDePreparacion al repositorioLocal ejecutamos:
+git commit -m "Descripción de lo que contiene el commit"
+Si ejecutamos: 
+git status :  Nos mostrara que esta limpia el areaDePreparacion.
+NOTA: 
+//Cuando se hace un commit sin -m me abre un editor (vin) para agregar el mensaje -  pero luego se debe cerrar el editor 
+//Al abrir el editor y poder escribir texto debo presionar la tecla 
+ESC + i --> en la parte de abajo aparece INSERTAR
+//ahí, ya podemos agregar el texto del commit: aca ya no se agregan comillas, esto lo haria el editor.
+ESC * Shif + ZZ _ Para guardar los cambios, agregar el mensaje al commit y salir.
+
+Hasta este momento ya tenemos un repositorio local con un archivos
+
+¿Comó agregar cambios al archivo que ya tenemos?
+Despues de modificar el archivos ejecutamos:
+git add nombreArchivo.txt  o git add . 
+git commit -m "Descripción del commit"
+y listo. 
+
+Para ver el estado de los archivos del directorioDeTrabajo
+git status 
+
+1. Si no hay cambios en los archivos después del último commit: Nos mostrará que esta limpia el areaDePreparacion.
+2. Si hay cambios en los archivos ya existente: Nos mostrará el archivo en rojo y reportará que hay cambios. 
+3. Si hay archivos nuevos: Nos mostrará el nuevo archivo en rojo y nos mostrará estado "untracker"
+4. Si hay cambios en los archivos ya existente y los cambios ya estan adicionados al areaDePreparacion: mostrara el archivo en verde.
+
+Estados de un archivo
+1- untracker -  sin tastrear
+2- tracked - cuando el archivo es adicionado con git add al areaDePreparacion
+3- tracked en el Repositorio -  despues de hacer un git commit - esto adiciona el archivo al repositorio local y le asigna un codigoMuyLargo como identificador que significa una nueva versión de los documento del repositorio.
+
+Para ver las versiones o commits de un archivo
+git log nombreArchivo.txt
+
+Para ver las versiones o commits del repositorio (osea todos los cambio, no solo de un archivo en específico)
+git log
+
+Si quiero ver los cambios aplicados a un archivo que se modifico el último commit, con relación a la última modificación antes de ese commit
+git show nombreArchivo.txt
+Nota1: 
+Lineas en blanco --> sin cambios.
+Lineas en rojo --> modificadas.
+Lineas verde --> las que se modificarón y tiene los nuevos cambios y las nuevas adicionadas. 
+
+Para comparar un commit con otro
+Tener en cuenta el orden:  Mejor poner el mas antiguo y luego el mas reciente para que aplique la nota anterior Nota1
+git diff codigoCOMMIT codigoOTROcommit
+
+Para ver los commits de un repositorio
+git log : permite ver el historial de commits en el repositorio
+git log --stat : Permite ver el detalle del historial de commits -- archivos y cantidad de bites modificados en el cada archivo
+Muestra los commit del mas reciente al mas antiguo
+
+NOTA2
+Al mostrar el historial de los commmit: si el listado es más largo de lo que permite ver en la pantalla aparecen : 
+para continuar viendo la lista puedo desplazarme con la flecha de bajada.
+si quiero salir de la vista presiono la tecla q 
+
+
+Si adicione un archivo al areaDePreparacion y luego lo modifique -  como los cambios no se han adicionado al areaDePreparacion al ejecutar git diff me muestra los cambios entre el nuevo archivo y el anterior.
+Recordar colores: 
+Nota1: 
+Lineas en blanco --> sin cambios.
+Lineas en rojo --> modificadas.
+Lineas verde --> actuales. 
+
+NOTA2
+Al tener la vista de los cambios: si los cambios son mas largos de lo que permite ver la pantalla aparecen : 
+para continuar viendo los cambios puedo desplazarme con la flecha de bajada.
+si quiero salir de a vista de cambios presiono la tecla q 
+
+
+Para volver a un commit específico 
+git checkout
+
+git checkout codigoCOMMIT(cc032c9c5c115228cf1f22a10c279c2744c8bef8) nombreArchivo.extension (archivo a recuperar ese commit) trae a archivo como se subio al repositorio en ese commit (esto modifica el archivo nombreArchivo.extension -- pero para actualizar los cambios debo ejecutar git add . y luego el commit) 
+Nota: si no deseo finalmente volver a la versión que me traje puedo volver a otro commit o la versión actual con: 
+git checkout master nombreArchivo.extension
+
+Para volver a un commit del pasado (3 formas y sus implicaciones)
+git reset : permite deshacer o revertir cambios - borra historial de los commit y los archivos generados despues del commit al que se regresa. No se pueden volver a recuperar.
+
+git reset --soft
+git reset --mixed
+git reset --hard
+
+Para entender los movimientos entre versión usando el reset es importante entender como es el flujo de los movimientos en el repositorio
+
+git add .  : vamos del directorioDeTrabajo al areaDePreparacion
+git commit : vamos del areaDePreparacion al repositorioLocal
+git checkout : vamos del repositorioLocal al directorioDeTrabajo (acá obtenemos una vista, pero los cambio se deben confirmar con git add . y git commit - o descartar con git checkout master nombreArchivo.extension)
+
+Con 
+git resert codigoCOMMIT --hard : botamos a la basura todo el historial, los archivos creados y cambios despues de codigoCOMMIT al que se regresa.
+
+git reset codigoCOMMIT --hard
+- directorioDeTrabajo: cambia - deja los archivos y los cambios cargados en el codigoCOMMIT
+- areaDePreparacion: limplia
+- repositorioLocal: borra todo el historia de los cambios.
+NOTA: no hay forma de recuperar los cambios de los commits borrados. 
+
+Con
+git reset codigoCOMMIT --soft :ss
+- directorioDeTrabajo: sin cambios
+- areaDePreparacion: carga acá todos los archivos y cambios de los commits posteriores a codigoCOMMIT
+- repositorioLocal: borra todo el historia de los cambios.
+NOTA: si ejecuto git commit, sube todo lo que hay en el areaDePreparacion, no se pierden archivos, ni cambios - solo el historial de los commits
+
+Con 
+git reset codigoCOMMIT --mixed :
+- directorioDeTrabajo: conserva los nuevos archivos después del codigoCOMMIT - pero vuelve a las versiones anteriores de los archivos modificados en el codigoCOMMIT
+- areaDePreparacion: carga acá todos los archivos posteriores a codigoCOMMIT - en estado "unTracker"
+- repositorioLocal: borra todo el historia de los cambios.
+NOTA: si ejecuto  git add . y git commit, sube todo lo que hay en el areaDePreparacion, no se pierden archivos, ni cambios - solo el historial de los commits.
+
+Con 
+git reset HEAD :
+- directorioDeTrabajo: sin cambios
+- areaDePreparacion:  saca del areaDePreparacion los cambios cargados en los ultimos add después del último commit -
+- repositorioLocal: sin cambios
+
+git rm : Comando para eliminar archivos de Git sin eliminar su historial.
+Se pueden recuperar el archivo volviendo al commit antes de borrar el archivo. 
+
+git rm --cached : Elimina archivos del repositorioLocal y del areaDePreparacion, pero los mantiene en directorioDeTrabajo. Deja de trackear el historial de cambios de estos archivos, por lo que quedan en estado untracked.
+- directorioDeTrabajo: sin cambios
+- areaDePreparacion:  el archivo con estado "untracked"
+- repositorioLocal: se elimina el archivo, pero se conserva el historias de commits.
+
+git rm --force : Elimina los archivos repositorioLocal y del directorioDeTrabajo. Git guarda todo, por lo que podemos recuperar archivos eliminados si es necesario (empleando comandos avanzados).
+- directorioDeTrabajo: se elimina el archivo
+- areaDePreparacion:  el archivo con estado "untracked"
+- repositorioLocal: se elimina el archivo, pero se conserva el historias de commits.
+
+Con
+git revert codigoCOMMIT: revertimos los cambios cargados en el repositorioLocal después de un determinado commit
+- directorioDeTrabajo: se elimina los archivos y los cambios aplicados en el codigoCOMMIT, conserva los archivos creados porteriores al commit.
+- areaDePreparacion:  carga los archivos creados después del codigoCOMMIT -  estado  "untracked"
+- repositorioLocal: se elimina los archivo creados en ese commit, pero se conserva el historias de commits. - y queda el registro de revert codigoCOMMIT
+
+REPOSITORIO REMOTO
